@@ -1,0 +1,24 @@
+# -* coding: utf-8 -*-
+# vim: ft=jinja
+
+{% set osmap = salt['grains.filter_by']({
+    'default':{
+       'pg_extras': ['postgresql-jdbc',]
+       'deps': ['gperftools-libs',]
+     },
+    'Debian': {
+       'pg_extras': ['libpostgresql-jdbc-java',]
+       'deps': ['libxm4', 'libsasl2-2', 'libsasl2-modules-gssapi-mit', 'libldap-2.4-2', 'cups',]
+     },
+    'Suse':{
+       'pg_extras': ['libecpg6', 'postgresql-jdbc',]
+       'deps': ['libxm4', 'cups', foomatic-filters', 'imageMagick', 'libsasl2-2-gssapi', libldap-2_4-2', 'gperftools',]
+     },
+ }, grain='os_family')
+)%}
+
+{# start with defaults, merge osmaps and then pillars #}
+{% import_yaml "linuxvda/defaults.yaml" as defaults %}
+{% do defaults.linuxvda.update( osmap ) %}
+{% set linuxvda = salt['pillar.get']( 'linuxvda', default=defaults.linuxvda, merge=True) %}
+
