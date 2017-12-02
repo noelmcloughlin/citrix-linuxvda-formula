@@ -4,6 +4,7 @@
 {% from 'linuxvda/map.jinja' import linuxvda, sls_block with context %}
 
 include:
+  - linuxvda.pkg
   - linuxvda.config
   - linuxvda.service
 
@@ -12,8 +13,9 @@ extend:
   linuxvda_{{ svc }}_service:
     service:
       - listen:
-        - cmd: linuxvda_config
+        - pkg: linuxvda-distro-package
+        - cmd: linuxvda_setup
       - require:
-        - cmd: linuxvda_config
+        - pkg: linuxvda-distro-package
+        - cmd: linuxvda_setup
   {%- endfor %}
-

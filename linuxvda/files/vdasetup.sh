@@ -6,7 +6,7 @@
 
 #configure the Linux VDA
 
-{%- for option, value in linuxvda.env.variables %}
+{%- for option, value in linuxvda.citrix.variables %}
  export {{ option }} = {{ value }}
 {%- endfor %}
 {{ citrix_home }}/VDA/{{ setupcmd }}

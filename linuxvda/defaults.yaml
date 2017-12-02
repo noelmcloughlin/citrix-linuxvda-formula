@@ -3,25 +3,24 @@
 
 linuxvda:
   server: xendesktopvda
+  src_pkgname: XenDesktopVDA-7.16.0.412-1.el7_x.x86_64.rpm
+  src_hashsum: sha256=8b75157869fda9db2a8bebeffee75619fcda4d9dcadac62f013d4f89a7a6ffe6
   services:
     - ctxhdx
     - ctxvda
-  setupcmd: ctxsetup.sh
-  cleanup: ctxcleanup.sh
+  requiredpkgs:
+    - gperftools-libs
+    - postgresql-jdbc
 
   citrix:
+    # uri value must be overridden by pillar.
+    src_uri: https://www.citrix.com/downloads/xendesktop/
     home: /opt/Citrix
-    archive_type: 
-    opts: -s -L
-    interval: 60
-    retries: 2
-    source_url:
-    src_hashfile:
-    src_hashsum:
-  env:
     xen_timesync_sysfile: /proc/sys/xen/independent_wallclock
     xen_timesync_sysflag: 'xen.independent_wallclock = 1'
     nvidia_check: glxinfo | grep NVIDIA
+    setupcmd: ctxsetup.sh
+    cleanup: ctxcleanup.sh
     variables:
       CTX_XDL_SITE_NAME: example.com
       CTX_XDL_LDAP_LIST: ldap1.example.com ldap2.example.com
@@ -35,9 +34,16 @@ linuxvda:
       CTX_XDL_HDX_3D_PRO: Y
       CTX_XDL_VDI_MODE: N
       CTX_XDL_START_SERVICE: Y
-    nsswitch:
-      regex:
-       {% raw %}
-        - ['hostsMdns', '^(?!#).*(?<!#|\w)(host.*:.*files\s)(mdns4?_minimal.*\]\s*)(dns.*$)', '\1 \3',]
-       {% endraw %}
+
+  dl:
+    opts: -s -L
+    interval: 60
+    retries: 2
+    tmpdir: /tmp/citrix_linuxvda_tmp
+
+  nsswitch:
+    regex:
+     {% raw %}
+      - ['hostsMdns', '^(?!#).*(?<!#|\w)(host.*:.*files\s)(mdns4?_minimal.*\]\s*)(dns.*$)', '\1 \3',]
+     {% endraw %}
 

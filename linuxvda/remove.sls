@@ -14,8 +14,9 @@ linuxvda_{{ svc }}_stop:
 linuxvda_remove:
   cmd.run:
     - name: {{ linuxvda.citrix.cleanup }}
+    - onlyif: test -f {{ linuxvda.citrix.cleanup }}
   pkg.removed:
-    - name: {{ linuxvda.pkg }}
+    - name: {{ linuxvda.src_pkgname.split('-')[0] }}
     - require:
       - cmd: linuxvda_remove
   file.absent:

@@ -3,16 +3,16 @@
 
 {% set osmap = salt['grains.filter_by']({
     'default':{
-       'pg_extras': ['postgresql-jdbc',]
-       'deps': ['gperftools-libs',]
      },
     'Debian': {
-       'pg_extras': ['libpostgresql-jdbc-java',]
-       'deps': ['libxm4', 'libsasl2-2', 'libsasl2-modules-gssapi-mit', 'libldap-2.4-2', 'cups',]
+       'src_pkgname': 'xendesktopvda_7.16.0.412-1.ubuntu16.04_amd64.deb',
+       'src_hashsum': 'sha256=3e36dbd3f5ba56e4058f1f39c3e682b890eec459425c84e4150e60440724db4c',
+       'requiredpkgs': ['libxm4', 'libsasl2-2', 'libsasl2-modules-gssapi-mit', 'libldap-2.4-2', 'cups', 'libpostgresql-jdbc-java',]
      },
     'Suse':{
-       'pg_extras': ['libecpg6', 'postgresql-jdbc',]
-       'deps': ['libxm4', 'cups', foomatic-filters', 'imageMagick', 'libsasl2-2-gssapi', libldap-2_4-2', 'gperftools',]
+       'src_pkgname': 'XenDesktopVDA-7.16.0.412-1.sle12_x.x86_64.rpm',
+       'src_hashsum': 'sha256=57bd03ee4a01cce9a01571eba668b0dcc34787a9f7a4b8a637696172860206f7',
+       'requiredpkgs': ['libxm4', 'cups', foomatic-filters', 'imageMagick', 'libsasl2-2-gssapi', libldap-2_4-2', 'gperftools', 'libecpg6', 'postgresql-jdbc',]
      },
  }, grain='os_family')
 )%}
@@ -22,3 +22,5 @@
 {% do defaults.linuxvda.update( osmap ) %}
 {% set linuxvda = salt['pillar.get']( 'linuxvda', default=defaults.linuxvda, merge=True) %}
 
+{# construct download url #}
+{% do linuxvda.dl.update({"url": "'{0}/{1}'.format(salt['pillar.get']('linuxvda:citrix.src_uri', {}), linuxvda.src_pkgname)", })

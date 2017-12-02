@@ -1,24 +1,14 @@
-# -*- coding: utf-8 -*-
-# vim: ft: yaml
-
 linuxvda:
   citrix:
-    home: /opt/Citrix
-    source_url:
-    src_hashfile:
-    src_hashsum:
-  env:
+    #uri value must be supplied here
+    src_uri: https://www.example.com/downloads/xendesktop/linuxvda/
+    #Formula default is currently version 7.16
+    #src_pkgname: XenDesktopVDA-7.16.0.412-1.el7_x.x86_64.rpm
+    #src_hashsum: sha256=8b75157869fda9db2a8bebeffee75619fcda4d9dcadac62f013d4f89a7a6ffe6
     variables:
-      # These values are formula defaults
+      #Site specific configuration goes here
       CTX_XDL_SITE_NAME: example.com
       CTX_XDL_LDAP_LIST: ldap1.example.com ldap2.example.com
       CTX_XDL_SEARCH_BASE: search-base
       CTX_XDL_DDC_LIST: delivery-controller1.example.com dc2.example.com
-      CTX_XDL_SUPPORT_DDC_AS_CNAME: N
-      CTX_XDL_VDA_PORT: 80
-      CTX_XDL_REGISTER_SERVICE: Y
-      CTX_XDL_ADD_FIREWALL_RULES: Y
-      CTX_XDL_AD_INTEGRATION: 1
-      CTX_XDL_HDX_3D_PRO: Y
-      CTX_XDL_VDI_MODE: N
-      CTX_XDL_START_SERVICE: Y
+

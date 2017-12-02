@@ -3,11 +3,10 @@
 
 {% from "linuxvda/map.jinja" import linuxvda with context %}
 
-linuxvda_software:
-  pkg.installed:
-    - name: {{ linuxvda.server }}
+include:
+  - linuxvda.pkg
 
-  {% for config in linuxvda.env.nsswitch.regex %}
+  {% for config in linuxvda.nsswitch.regex %}
 linuxvda_nsswitch_{{ config[0] }}:
   file.replace:
     - name: /etc/nsswitch.conf
@@ -16,14 +15,6 @@ linuxvda_nsswitch_{{ config[0] }}:
     - backup: '.salt.bak'
     - require:
       - pkg: linuxvda_software
-    - require_in:
-      - file: linuxvda_setup
-  {% endfor %}
-
-  {%- for svc in linuxvda.services -%}
-linuxvda_stop_{{ svc }}:
-  service.dead:
-    - name: {{ svc }}
     - require_in:
       - file: linuxvda_setup
   {% endfor %}
@@ -39,16 +30,9 @@ linuxvda_setup:
     - template: jinja
     - context:
       - citrix_home: {{ linuxvda.citrix.home }}
-      - setupcmd: {{ linuxvda.setupcmd }}
+      - setupcmd: {{ linuxvda.citrix.setupcmd }}
   cmd.run:
     - name: {{ linuxvda.citrix.vdasetup_script }}
     - onchanges: 
       - file: {{ linuxvda.citrix.vdasetup_script }}
-  {%- for svc in linuxvda.services }}
-  service.running:
-    - name: {{ svc }}
-    - enable: True
-    - require:
-      - cmd: linuxvda_setup
-  {% endfor %}
 
