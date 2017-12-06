@@ -32,13 +32,27 @@ Download Linux VDA package, validate hashsum, and install the software.
 
 Disable mDNS in nsswitch.conf, execute Linux VDA setup script, and start services.
 
-``linuxvda.service``
---------------------
-
-Manage running state of Linux VDA services.
-
 ``linuxvda.remove``
 --------------------------
 
 Stop services, remove postgres configuration, uninstall software, and delete <citrix-home>/VDA directory.
+
+
+Preparation
+================
+
+The following formulae can be useful to help achieve documented pre-requisites for installing Citrix Linux VDA-
+
+`resolver-formula
+<https://github.com/saltstack-formulas/resolver-formula>`_
+`chrony-formula
+<https://github.com/saltstack-formulas/chrony-formula>`_
+`sun-java-formula
+<https://github.com/saltstack-formulas/sun-java-formula>`_
+`postgres-formula
+<https://github.com/saltstack-formulas/postgres-formula>`_
+`kerberos-formula
+<https://github.com/noelmcloughllin/kerberos-formula>`_
+`samba-formula
+<https://github.com/noelmcloughlin/samba-formula>`_
 
