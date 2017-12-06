@@ -6,9 +6,6 @@ linuxvda:
     #src_pkgname: XenDesktopVDA-7.16.0.412-1.el7_x.x86_64.rpm
     #src_hashsum: sha256=8b75157869fda9db2a8bebeffee75619fcda4d9dcadac62f013d4f89a7a6ffe6
     variables:
-      #Site specific configuration goes here
-      CTX_XDL_SITE_NAME: example.com
-      CTX_XDL_LDAP_LIST: ldap1.example.com ldap2.example.com
-      CTX_XDL_SEARCH_BASE: search-base
-      CTX_XDL_DDC_LIST: delivery-controller1.example.com dc2.example.com
+      #Site specific configuration
+      CTX_XDL_DDC_LIST: citrixdc1.example.com
 

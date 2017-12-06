@@ -6,7 +6,6 @@
 include:
   - linuxvda.pkg
   - linuxvda.config
-  - linuxvda.service
 
 extend:
   {%- for svc in linuxvda.services %}

@@ -36,3 +36,10 @@ linuxvda_setup:
     - onchanges: 
       - file: {{ linuxvda.citrix.vdasetup_script }}
 
+  {%- for svc in linuxvda.services %}
+linuxvda_{{ svc }}_service_running:
+  service.running:
+    - name: {{ svc }}
+    - enable: True
+  {% endfor %}
+
