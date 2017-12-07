@@ -13,14 +13,14 @@ linuxvda_{{ svc }}_stop:
 
 linuxvda_remove:
   cmd.run:
-    - name: {{ linuxvda.citrix.cleanup }}
-    - onlyif: test -f {{ linuxvda.citrix.cleanup }}
+    - name: {{ linuxvda.citrix.ctxcleanup }}
+    - onlyif: test -f {{ linuxvda.citrix.ctxcleanup }}
   pkg.removed:
     - name: {{ linuxvda.src_pkgname.split('-')[0] }}
     - require:
       - cmd: linuxvda_remove
   file.absent:
-    - name: {{ linuxvda.citrix.prefix }}/VDA
+    - name: /opt/Citrix/VDA
     - require:
       - pkg: linuxvda_remove
 

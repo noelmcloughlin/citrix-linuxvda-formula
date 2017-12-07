@@ -1,17 +1,24 @@
 {% from "linuxvda/map.jinja" import linuxvda with context %}
 
-linuxvda-create-extract-dir:
+linuxvda_dependencies:
   file.directory:
-    - names: '{{ linuxvda.dl.tmpdir }}'
+    - name: '{{ linuxvda.dl.tmpdir }}'
     - clean: True
     - makedirs: True
     - require_in:
-      - cmd: linuxvda-distro-package
+      - cmd: linuxvda_package
     - unless: test -d '{{ linuxvda.dl.tmpdir }}'
+  pkg.installed:
+    - pkgs:
+    {% for pkg in linuxvda.pkgs %}
+      - {{ pkg }}
+    {% endfor %}
+    - require_in:
+      - pkg: linuxvda_package
 
-linuxvda-distro-package:
+linuxvda_package:
   cmd.run:
-    - name: curl {{linuxvda.dl.opts}} -o '{{ linuxvda.dl.tmpdir }}/{{ linuxvda.src_pkgname }}' {{ linuxvda.dl.url }}
+    - name: curl {{linuxvda.dl.opts}} -o {{linuxvda.dl.tmpdir}}/{{linuxvda.src_pkg}} {{linuxvda.citrix.uri ~ linuxvda.src_pkg}}
     {% if grains['saltversioninfo'] >= [2017, 7, 0] %}
     - retry:
       attempts: {{ linuxvda.dl.retries }}
@@ -19,19 +26,12 @@ linuxvda-distro-package:
     {% endif %}
   module.run:
     - name: file.check_hash
-    - path: '{{ linuxvda.dl.tmpdir }}/{{ linuxvda.src_pkgname }}'
-    - file_hash: {{ linuxvda.src_hashsum }}
-    - onlyif: test -f '{{ linuxvda.dl.tmpdir }}/{{ linuxvda.src_pkgname }}'
+    - path: {{ linuxvda.dl.tmpdir }}/{{ linuxvda.src_pkg }}
+    - file_hash: {{ linuxvda.src_hash }}
+    - onlyif: test -f {{ linuxvda.dl.tmpdir }}/{{ linuxvda.src_pkg }}
     - require_in:
-      - pkg: linuxvda-distro-package
+      - pkg: linuxvda_package
   pkg.installed:
     - sources:
-      - linuxvda: '{{ linuxvda.dl.tmpdir }}/{{ linuxvda.src_pkgname }}'
-    {% for pkg in linuxvda.requiredpkgs %}
-      - {{ pkg.split('.')[0] }}: {{ pkg }}
-    {% endfor %}
-  file.absent:
-    - name: '{{linuxvda.tmpdir}}'
-    - onchanges:
-      - file: linuxvda-create-extract-dir
- 
+      - linuxvda: {{ linuxvda.dl.tmpdir }}/{{ linuxvda.src_pkg }}
+

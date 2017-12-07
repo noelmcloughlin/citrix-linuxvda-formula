@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # vim: ft: sls
 
-{% from 'linuxvda/map.jinja' import linuxvda, sls_block with context %}
+{% from 'linuxvda/map.jinja' import linuxvda with context %}
 
 include:
   - linuxvda.pkg
@@ -9,12 +9,12 @@ include:
 
 extend:
   {%- for svc in linuxvda.services %}
-  linuxvda_{{ svc }}_service:
+  linuxvda_{{ svc }}_running:
     service:
       - listen:
-        - pkg: linuxvda-distro-package
+        - pkg: linuxvda_package
         - cmd: linuxvda_setup
       - require:
-        - pkg: linuxvda-distro-package
+        - pkg: linuxvda_package
         - cmd: linuxvda_setup
   {%- endfor %}

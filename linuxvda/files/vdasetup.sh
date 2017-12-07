@@ -9,7 +9,7 @@
 {%- for option, value in linuxvda.citrix.variables %}
  export {{ option }} = {{ value }}
 {%- endfor %}
-{{ citrix_home }}/VDA/{{ setupcmd }}
+{{ ctxsetup }}
 return $?
 
 #..........................................................
