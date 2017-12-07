@@ -14,30 +14,29 @@ linuxvda_nsswitch_{{ config[0] }}:
     - repl: {{ config[2] }}
     - backup: '.salt.bak'
     - require:
-      - pkg: linuxvda_software
+      - pkg: linuxvda_package
     - require_in:
       - file: linuxvda_setup
   {% endfor %}
 
 linuxvda_setup:
   file.managed:
-    - name: {{ linuxvda.citrix.vdasetup_script }}
+    - name: {{ linuxvda.dl.tmpdir }}/vdasetup.sh
     - source: salt://linuxvda/files/vdasetup.sh
     - user: root
     - group: root
-    - mode: 644
+    - mode: 755
     - makedirs: True
     - template: jinja
     - context:
-      - citrix_home: {{ linuxvda.citrix.home }}
-      - setupcmd: {{ linuxvda.citrix.setupcmd }}
+      - ctxsetup: {{ linuxvda.citrix.ctxsetup }}
   cmd.run:
-    - name: {{ linuxvda.citrix.vdasetup_script }}
+    - name: {{ linuxvda.dl.tmpdir }}/vdasetup.sh
     - onchanges: 
-      - file: {{ linuxvda.citrix.vdasetup_script }}
+      - file: {{ linuxvda.dl.tmpdir }}/vdasetup.sh
 
   {%- for svc in linuxvda.services %}
-linuxvda_{{ svc }}_service_running:
+linuxvda_{{ svc }}_running:
   service.running:
     - name: {{ svc }}
     - enable: True
