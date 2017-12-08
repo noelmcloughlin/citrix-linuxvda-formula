@@ -41,7 +41,7 @@ Stop services, remove postgres configuration, uninstall software, and delete <ci
 Preparation
 ================
 
-The following formulae can be useful to help achieve documented pre-requisites for installing Citrix Linux VDA-
+Typically the target host is an AD domain member. These formulae satisfy documented requirements for Citrix Linux VDA-
 
 `resolver-formula
 <https://github.com/saltstack-formulas/resolver-formula>`_
