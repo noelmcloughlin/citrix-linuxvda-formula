@@ -33,5 +33,5 @@ linuxvda_package:
       - pkg: linuxvda_package
   pkg.installed:
     - sources:
-      - linuxvda: {{ linuxvda.dl.tmpdir }}/{{ linuxvda.src_pkg }}
+      - {{ linuxvda.normalname }}: {{ linuxvda.dl.tmpdir }}/{{ linuxvda.src_pkg }}
 

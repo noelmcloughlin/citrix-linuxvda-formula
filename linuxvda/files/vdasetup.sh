@@ -4,15 +4,24 @@
 # Configuration is stored at the bottom for quick reference.
 ############################################################
 
-#configure the Linux VDA
+#configure the Linux VDA single command
 
-{%- for option, value in linuxvda.citrix.variables %}
- export {{ option }} = {{ value }}
-{%- endfor %}
+CTX_XDL_SUPPORT_DDC_AS_CNAME="{{ CTX_XDL_SUPPORT_DDC_AS_CNAME }}" \
+CTX_XDL_DDC_LIST="{{ CTX_XDL_DDC_LIST }}" \
+CTX_XDL_VDA_PORT="{{ CTX_XDL_VDA_PORT }}" \
+CTX_XDL_REGISTER_SERVICE="{{ CTX_XDL_REGISTER_SERVICE }}" \
+CTX_XDL_ADD_FIREWALL_RULES="{{ CTX_XDL_ADD_FIREWALL_RULES }}" \
+CTX_XDL_AD_INTEGRATION="{{ CTX_XDL_AD_INTEGRATION }}" \
+CTX_XDL_HDX_3D_PRO="{{ CTX_XDL_HDX_3D_PRO }}" \
+CTX_XDL_VDI_MODE="{{ CTX_XDL_VDI_MODE }}" \
+CTX_XDL_SITE_NAME="{{ CTX_XDL_SITE_NAME }}" \
+CTX_XDL_LDAP_LIST="{{ CTX_XDL_LDAP_LIST }}" \
+CTX_XDL_SEARCH_BASE="{{ CTX_XDL_SEARCH_BASE }}" \
+CTX_XDL_START_SERVICE="{{ CTX_XDL_START_SERVICE }}" \
 {{ ctxsetup }}
-return $?
+exit $?
 
-#..........................................................
+#
 # Supported environment variables for quick reference.
 #
 

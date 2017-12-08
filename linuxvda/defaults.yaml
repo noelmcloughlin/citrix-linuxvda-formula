@@ -2,6 +2,7 @@
 # vim: ft: yaml
 
 linuxvda:
+  normalname: xendesktopvda
   src_pkg: XenDesktopVDA-7.16.0.412-1.el7_x.x86_64.rpm
   src_hash: sha256=8b75157869fda9db2a8bebeffee75619fcda4d9dcadac62f013d4f89a7a6ffe6
   services:
@@ -19,9 +20,9 @@ linuxvda:
     ctxsetup: /opt/Citrix/VDA/sbin/ctxsetup.sh
     ctxcleanup: /opt/Citrix/VDA/sbin/ctxcleanup.sh
     variables:
-      CTX_XDL_SITE_NAME:
-      CTX_XDL_LDAP_LIST:
-      CTX_XDL_SEARCH_BASE:
+      CTX_XDL_SITE_NAME: <none>
+      CTX_XDL_LDAP_LIST: <none>
+      CTX_XDL_SEARCH_BASE: <none>
       CTX_XDL_DDC_LIST: citrixdc.example.com
       CTX_XDL_SUPPORT_DDC_AS_CNAME: N
       CTX_XDL_VDA_PORT: 80
