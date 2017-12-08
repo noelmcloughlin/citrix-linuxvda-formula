@@ -29,10 +29,22 @@ linuxvda_setup:
     - makedirs: True
     - template: jinja
     - context:
-      - ctxsetup: {{ linuxvda.citrix.ctxsetup }}
+      ctxsetup: {{ linuxvda.citrix.ctxsetup }}
+      CTX_XDL_SITE_NAME: {{ linuxvda.citrix.variables.CTX_XDL_SITE_NAME }}
+      CTX_XDL_LDAP_LIST: {{ linuxvda.citrix.variables.CTX_XDL_LDAP_LIST }}
+      CTX_XDL_SEARCH_BASE: {{ linuxvda.citrix.variables.CTX_XDL_SEARCH_BASE }}
+      CTX_XDL_DDC_LIST: {{ linuxvda.citrix.variables.CTX_XDL_DDC_LIST }}
+      CTX_XDL_SUPPORT_DDC_AS_CNAME: {{ linuxvda.citrix.variables.CTX_XDL_SUPPORT_DDC_AS_CNAME }}
+      CTX_XDL_VDA_PORT: {{ linuxvda.citrix.variables.CTX_XDL_VDA_PORT }}
+      CTX_XDL_REGISTER_SERVICE: {{ linuxvda.citrix.variables.CTX_XDL_REGISTER_SERVICE }}
+      CTX_XDL_ADD_FIREWALL_RULES: {{ linuxvda.citrix.variables.CTX_XDL_ADD_FIREWALL_RULES }}
+      CTX_XDL_AD_INTEGRATION: {{ linuxvda.citrix.variables.CTX_XDL_AD_INTEGRATION }}
+      CTX_XDL_HDX_3D_PRO: {{ linuxvda.citrix.variables.CTX_XDL_HDX_3D_PRO }}
+      CTX_XDL_VDI_MODE: {{ linuxvda.citrix.variables.CTX_XDL_VDI_MODE }}
+      CTX_XDL_START_SERVICE: {{ linuxvda.citrix.variables.CTX_XDL_START_SERVICE }}
   cmd.run:
     - name: {{ linuxvda.dl.tmpdir }}/vdasetup.sh
-    - onchanges: 
+    - require:
       - file: {{ linuxvda.dl.tmpdir }}/vdasetup.sh
 
   {%- for svc in linuxvda.services %}

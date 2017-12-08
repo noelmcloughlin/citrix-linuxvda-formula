@@ -3,7 +3,7 @@
 
 {% from "linuxvda/map.jinja" import linuxvda with context %}
 
-  {%- for svc in linuxvda.services -%}
+  {% for svc in linuxvda.services %}
 linuxvda_{{ svc }}_stop:
   service.dead:
     - name: {{ svc }}
@@ -16,7 +16,7 @@ linuxvda_remove:
     - name: {{ linuxvda.citrix.ctxcleanup }}
     - onlyif: test -f {{ linuxvda.citrix.ctxcleanup }}
   pkg.removed:
-    - name: {{ linuxvda.src_pkgname.split('-')[0] }}
+    - name: {{ linuxvda.normalname }}
     - require:
       - cmd: linuxvda_remove
   file.absent:
