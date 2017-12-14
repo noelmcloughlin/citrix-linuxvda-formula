@@ -10,6 +10,7 @@ A saltstack formula for CITRIX Linux Virtual-Desktop-Agent (VDA) software.
     <http://docs.saltstack.com/en/latest/topics/development/conventions/formulas.html>`_.
     Refer to pillar.example and defaults.yaml for configurable values.
     Supported linux distributions are Ubuntu, SuSE, RHEL, and CentOS.
+    Using 'selinux enforcing' mode may cause state failures.
 
 Available states
 ================
@@ -41,18 +42,20 @@ Stop services, remove postgres configuration, uninstall software, and delete <ci
 Preparation
 ================
 
-Typically the target host is an AD domain member. These formulae satisfy documented requirements for Citrix Linux VDA-
+The target host is an AD domain member. The listed formulae satisfy pre-requisites for Citrix Linux VDA-
 
-`resolver-formula
+- `resolver-formula
 <https://github.com/saltstack-formulas/resolver-formula>`_
-`chrony-formula
+
+- `chrony-formula
 <https://github.com/saltstack-formulas/chrony-formula>`_
-`sun-java-formula
-<https://github.com/saltstack-formulas/sun-java-formula>`_
-`postgres-formula
+
+- `postgres-formula
 <https://github.com/saltstack-formulas/postgres-formula>`_
-`kerberos-formula
+
+- `kerberos-formula
 <https://github.com/noelmcloughllin/kerberos-formula>`_
-`samba-formula
+
+- `samba-formula
 <https://github.com/noelmcloughlin/samba-formula>`_
 
