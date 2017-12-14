@@ -13,8 +13,13 @@
     'src_pkg': 'XenDesktopVDA-7.16.0.412-1.sle12_x.x86_64.rpm',
     'src_hash': 'sha256=57bd03ee4a01cce9a01571eba668b0dcc34787a9f7a4b8a637696172860206f7',
     'pkgs': ['libxm4', 'cups', 'foomatic-filters', 'imageMagick', 'libsasl2-2-gssapi', 'libldap-2_4-2', 'gperftools', 'libecpg6', 'postgresql-jdbc',],
-  },
-}, grain='os_family')%}
+   },
+ }, grain='os_family', merge=salt['grains.filter_by']({
+    'Fedora': {
+      'normalname': 'XenDesktopVDA',
+     },
+   }, grain='os')
+)%}
 
 {# start with defaults, merge osmaps and then pillars #}
 {% import_yaml "linuxvda/defaults.yaml" as defaults %}
