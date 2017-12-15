@@ -59,3 +59,15 @@ The target host is an AD domain member. The listed formulae satisfy pre-requisit
 - `samba-formula
 <https://github.com/noelmcloughlin/samba-formula>`_
 
+FQDN
+======
+To ensure that the DNS domain name and FQDN of the machine are reported back correctly, change the following line of the /etc/hosts file to include the FQDN and hostname as the first two entries:
+
+     127.0.0.1  hostname-fqdn hostname localhost localhost.localdomain localhost4 localhost4.localdomain4
+
+For example:
+
+     127.0.0.1  vda01.example.com vda01 localhost localhost.localdomain localhost4 localhost4.localdomain4
+
+Remove any other references to hostname-fqdn or hostname from other entries in the file.
+
