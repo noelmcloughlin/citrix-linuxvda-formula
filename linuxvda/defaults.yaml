@@ -8,6 +8,13 @@ linuxvda:
   services:
     - ctxhdx
     - ctxvda
+    - ctxcdm
+    - ctxceip
+    - ctxcups
+    - ctxlogd
+    - ctxpolicyd
+    - ctxusbsd
+    - ctxvhcid
   pkgs:
     - gperftools-libs
     - postgresql-jdbc
