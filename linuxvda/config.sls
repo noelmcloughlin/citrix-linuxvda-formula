@@ -6,6 +6,13 @@
 include:
   - linuxvda.pkg
 
+127.0.1.1:
+  host.only:
+    - hostnames:
+      - {{ salt['grains.get']('fqdn') }}
+      - {{ salt['grains.get']('host') }}
+      - 'salt'
+
   {% for config in linuxvda.nsswitch.regex %}
 linuxvda_nsswitch_{{ config[0] }}:
   file.replace:
