@@ -67,8 +67,10 @@ Pillars
 
 Setting the following pillars should be sufficient.
 
-linuxvda:
-  citrix:
-    uri: http://download.example.com/xendesktop/
-    variables:
-      CTX_XDL_DDC_LIST: ubuntu-dc.example.com
+.. code:: yaml
+
+    linuxvda:
+      citrix:
+        uri: http://download.example.com/xendesktop/
+        variables:
+          CTX_XDL_DDC_LIST: ubuntu-dc.example.com
