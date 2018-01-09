@@ -65,11 +65,10 @@ The target host is an AD domain member. The listed formulae satisfy pre-requisit
 Pillars
 ===================
 
-The following pillars should be sufficient.
+Setting the following pillars should be sufficient.
 
 linuxvda:
   citrix:
     uri: http://download.example.com/xendesktop/
-    #Formula default is currently version 7.16 (dec2017)
     variables:
       CTX_XDL_DDC_LIST: ubuntu-dc.example.com
