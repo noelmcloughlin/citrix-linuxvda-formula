@@ -2,9 +2,18 @@
 # vim: ft: yaml
 
 linuxvda:
-  normalname: xendesktopvda
+  #Ubuntu values..
+  packagename: xendesktopvda
   src_pkg: XenDesktopVDA-7.16.0.412-1.el7_x.x86_64.rpm
   src_hash: sha256=8b75157869fda9db2a8bebeffee75619fcda4d9dcadac62f013d4f89a7a6ffe6
+  fqdn_resolver_alias:
+  enable_ntp_timesync: timedatectl set-ntp True
+
+  xdping:
+    package:
+    archive: linux-xdping.tar
+    hash: sha256=38cf8ff42cd0d610ba7323689046cd1492db912c9f722932e99c13869301186a
+    cmd: /usr/bin/xdping
   services:
     - ctxhdx
     - ctxvda

@@ -1,4 +1,10 @@
 linuxvda:
+  enable_ntp_timesync: timedatectl set-ntp True
+
+  #fqdn_resolver_alias: 'salt'
+  # If salt sets bad fqdn in /etc/hosts, the set domain here to fix things.
+  #domain: example.com
+
   citrix:
     #uri value must be supplied here
     uri: https://www.example.com/downloads/xen/linuxvda/
@@ -8,4 +14,7 @@ linuxvda:
     variables:
       #Site specific configuration
       CTX_XDL_DDC_LIST: citrixdc1.example.com
+  xdping:
+    archive: linux-xdping.tar
+    hash: sha256=38cf8ff42cd0d610ba7323689046cd1492db912c9f722932e99c13869301186a
 

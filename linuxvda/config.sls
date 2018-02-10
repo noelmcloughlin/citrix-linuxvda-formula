@@ -3,15 +3,25 @@
 
 {% from "linuxvda/map.jinja" import linuxvda with context %}
 
+{%- set fqdn = salt['grains.get']('fqdn') %}
+{%- if fqdn == salt['grains.get']('host') %}
+  {%- set dn = salt['pillar.get']('linuxvda:domain') or None %}
+  {%- if dn %}
+    {%- set fqdn = fqdn ~ "." ~ dn %}
+  {%- endif %}
+{%- endif %}
+  
 include:
   - linuxvda.pkg
 
 127.0.1.1:
   host.only:
     - hostnames:
-      - {{ salt['grains.get']('fqdn') }}
+      - {{ fqdn }}
       - {{ salt['grains.get']('host') }}
-      - 'salt'
+      {% if linuxvda.fqdn_resolver_alias %}
+      - {{ linuxvda.fqdn_resolver_alias }}
+      {% endif %}
 
   {% for config in linuxvda.nsswitch.regex %}
 linuxvda_nsswitch_{{ config[0] }}:

@@ -26,12 +26,17 @@ Meta-state for inclusion of all states (except remove).
 ``linuxvda.pkg``
 --------------------
 
-Download Linux VDA package, validate hashsum, and install the software.
+Download Linux VDA package from `linuxvda.citrix.uri`, validate the hashsum, and install.
 
 ``linuxvda.config``
 --------------------
 
 Disable mDNS in nsswitch.conf, execute Linux VDA setup script, and start services.
+
+``linuxvda.xdping``
+--------------------
+
+Download XDPing package from `linuxvda.citrix.uri`, validate the hashsum, and install.
 
 ``linuxvda.remove``
 --------------------------
@@ -74,3 +79,41 @@ Setting the following pillars should be sufficient.
         uri: http://download.example.com/xendesktop/
         variables:
           CTX_XDL_DDC_LIST: ubuntu-dc.example.com
+
+Common problems
+=======================
+
+Compare host's assigned (dhcp) ipaddress with DNS recorded ipaddress! Sometimes the values are out of sync.
+
+.. code-block:: bash
+
+     [myhost]$ ip addr
+     [myhost]$ host myhost.example.com
+
+Ensure system time is NTP synchronized (yes)!!
+
+.. code-block:: bash
+
+     $ # timedatectl
+               Local time: Fri 2018-02-09 08:34:10 MST
+           Universal time: Fri 2018-02-09 15:34:10 UTC
+                 RTC time: Fri 2018-02-09 15:34:21
+                Time zone: America/Denver (MST, -0700)
+          Network time on: yes
+         NTP synchronized: yes
+          RTC in local TZ: no
+
+If VDA Agent uses port 80 (default yes), check and fix port collisions with apache2, nginx, etc.
+
+.. code-block:: bash
+
+     $ netstat -a | grep :80
+
+Run the Citrix XDping tool from the `linuxvda.xdping` state. Fix any big issues and run formula again.
+
+.. code-block:: bash
+
+     $ # xdping
+
+
+
