@@ -6,6 +6,7 @@
 include:
   - linuxvda.pkg
   - linuxvda.config
+  - linuxvda.xdping
 
 extend:
   {%- for svc in linuxvda.services %}

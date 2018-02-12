@@ -16,7 +16,11 @@ linuxvda_remove:
     - name: {{ linuxvda.citrix.ctxcleanup }}
     - onlyif: test -f {{ linuxvda.citrix.ctxcleanup }}
   pkg.removed:
-    - name: {{ linuxvda.normalname }}
+    - pkgs:
+      - {{ linuxvda.packagename }}
+      - xendesktopvda
+      - XenDesktopVDA
+      - xdping
     - require:
       - cmd: linuxvda_remove
   file.absent:

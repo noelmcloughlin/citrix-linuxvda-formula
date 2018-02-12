@@ -15,6 +15,10 @@ linuxvda_dependencies:
     {% endfor %}
     - require_in:
       - pkg: linuxvda_package
+    {%- if linuxvda.enable_ntp_timesync %}
+  cmd.run:
+    - name: {{ linuxvda.enable_ntp_timesync }}
+    {%- endif %}
 
 linuxvda_package:
   cmd.run:
@@ -33,5 +37,5 @@ linuxvda_package:
       - pkg: linuxvda_package
   pkg.installed:
     - sources:
-      - {{ linuxvda.normalname }}: {{ linuxvda.dl.tmpdir }}/{{ linuxvda.src_pkg }}
+      - {{ linuxvda.packagename }}: {{ linuxvda.dl.tmpdir }}/{{ linuxvda.src_pkg }}
 
