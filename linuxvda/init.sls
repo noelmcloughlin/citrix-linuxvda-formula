@@ -14,8 +14,8 @@ extend:
     service:
       - listen:
         - pkg: linuxvda_package
-        - cmd: linuxvda_setup
+        - cmd: linuxvda_config_setup
       - require:
         - pkg: linuxvda_package
-        - cmd: linuxvda_setup
+        - cmd: linuxvda_config_setup
   {%- endfor %}
