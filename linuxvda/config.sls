@@ -33,10 +33,17 @@ linuxvda_nsswitch_{{ config[0] }}:
     - require:
       - pkg: linuxvda_package
     - require_in:
-      - file: linuxvda_setup
+      - file: linuxvda_config_setup
   {% endfor %}
 
-linuxvda_setup:
+linuxvda_config_presetup:
+  cmd.run:
+    - name: {{ linuxvda.citrix.ctxcleanup }}
+    - onlyif: test -f {{ linuxvda.citrix.ctxcleanup }}
+    - require_in:
+      - file: linuxvda_config_setup 
+
+linuxvda_config_setup:
   file.managed:
     - name: {{ linuxvda.dl.tmpdir }}/vdasetup.sh
     - source: salt://linuxvda/files/vdasetup.sh
