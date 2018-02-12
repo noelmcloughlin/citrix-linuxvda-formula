@@ -36,12 +36,14 @@ linuxvda_nsswitch_{{ config[0] }}:
       - file: linuxvda_config_setup
   {% endfor %}
 
+{%- if linuxvda.cleanup_before_setup %}
 linuxvda_config_presetup:
   cmd.run:
     - name: {{ linuxvda.citrix.ctxcleanup }}
     - onlyif: test -f {{ linuxvda.citrix.ctxcleanup }}
     - require_in:
       - file: linuxvda_config_setup 
+{%- endif %}
 
 linuxvda_config_setup:
   file.managed:
