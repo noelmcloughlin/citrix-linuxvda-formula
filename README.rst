@@ -62,10 +62,10 @@ The target host is an AD domain member. The listed formulae satisfy pre-requisit
 <https://github.com/saltstack-formulas/postgres-formula>`_
 
 - `kerberos-formula
-<https://github.com/noelmcloughllin/kerberos-formula>`_
+<https://github.com/saltstack-formulas/kerberos-formula>`_
 
 - `samba-formula
-<https://github.com/noelmcloughlin/samba-formula>`_
+<https://github.com/saltstack-formulas/samba-formula>`_
 
 Pillars
 ===================
