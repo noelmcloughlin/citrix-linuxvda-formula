@@ -72,6 +72,7 @@ linuxvda_config_setup:
     - name: {{ linuxvda.dl.tmpdir }}/vdasetup.sh
     - require:
       - file: {{ linuxvda.dl.tmpdir }}/vdasetup.sh
+    - cwd: /
 
   {%- for svc in linuxvda.services %}
 linuxvda_{{ svc }}_running:
