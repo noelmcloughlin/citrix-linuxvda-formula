@@ -9,8 +9,16 @@ linuxvda:
     #uri value must be supplied here
     uri: https://www.example.com/downloads/xen/linuxvda/
     #Formula default is currently version 7.16
-    #src_pkg: XenDesktopVDA-7.16.0.412-1.el7_x.x86_64.rpm
-    #src_hash: sha256=8b75157869fda9db2a8bebeffee75619fcda4d9dcadac62f013d4f89a7a6ffe6
+    #Latest version is 1811
+    ##EL7
+    #src_pkg: LinuxVDA-1811.el7_x.rpm 
+    #src_hash: sha256=80a995c2c4a042fd57092b8a5bc69f3d50c0ec8a468d1edc817789eff480dfac
+    ##SLE
+    #src_pkg: LinuxVDA-1811.sle12_x.rpm 
+    #src_hash: sha256=4120d9f4a8589a49fa34ac75c65c2e8ea639f464aea54bf553ea22c9eb27d0ef
+    #UBUNTU
+    #src_pkg: LinuxVDA-1811.ubuntu16.04.deb
+    #src_hash: sha256=cdc999d964fab391cd4680607d464d2619b7cd620995392edb3852c5db5ce715
     variables:
       #Site specific configuration
       CTX_XDL_DDC_LIST: citrixdc1.example.com
