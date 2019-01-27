@@ -14,10 +14,13 @@ linuxvda_xdping_tmpdir:
 linuxvda_xdping_download_archive:
   cmd.run:
     - name: curl -o {{linuxvda.dl.tmpdir}}/{{linuxvda.xdping.archive}} {{linuxvda.citrix.uri ~ linuxvda.xdping.archive}}
+    - unless: test -f {{linuxvda.dl.tmpdir}}/{{linuxvda.xdping.archive}}
     {% if grains['saltversioninfo'] >= [2017, 7, 0] %}
     - retry:
       attempts: {{ linuxvda.dl.retries }}
       interval: {{ linuxvda.dl.interval }}
+      until: True
+      splay: 10
     {% endif %}
 
     {%- if linuxvda.xdping.hash %}
@@ -28,7 +31,7 @@ linuxvda_xdping-check-archive-hash:
     - path: {{ linuxvda.dl.tmpdir }}/{{ linuxvda.xdping.archive }}
     - file_hash: {{ linuxvda.xdping.hash }}
     - onlyif: test -f {{ linuxvda.dl.tmpdir }}/{{ linuxvda.xdping.archive }}
-    - onchanges:
+    - require:
       - cmd: linuxvda_xdping_download_archive
     - require_in:
       - archive: linuxvda_xdping_archive_extract
@@ -39,7 +42,7 @@ linuxvda_xdping_archive_extract:
     - source: 'file://{{ linuxvda.dl.tmpdir }}/{{ linuxvda.xdping.archive }}'
     - name: '{{ linuxvda.dl.tmpdir }}'
     - archive_format: tar
-    - onchanges:
+    - require:
       - cmd: linuxvda_xdping_download_archive
     - require_in:
       - pkg: linuxvda_xdping_package_install
