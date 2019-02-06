@@ -5,7 +5,6 @@
 linuxvda_xdping_tmpdir:
   file.directory:
     - name: '{{ linuxvda.dl.tmpdir }}'
-    - clean: True
     - makedirs: True
     - require_in:
       - cmd: linuxvda_xdping_download_archive
@@ -62,11 +61,5 @@ linuxvda_xdping_package_install:
     - require:
       - archive: linuxvda_xdping_archive_extract
     - onlyif: test -f {{ linuxvda.dl.tmpdir }}/{{ linuxvda.xdping.package }}
-
-linuxvda_xdping_remove_tmpdir:
-  file.absent:
-    - name: '{{ linuxvda.dl.tmpdir }}'
-    - require:
-      - pkg: linuxvda_xdping_package_install
 
 {% endif %}

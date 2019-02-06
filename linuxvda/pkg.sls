@@ -3,7 +3,6 @@
 linuxvda_dependencies:
   file.directory:
     - name: '{{ linuxvda.dl.tmpdir }}'
-    - clean: True
     - makedirs: True
     - require_in:
       - cmd: linuxvda_package
