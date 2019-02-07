@@ -36,7 +36,7 @@ Disable mDNS in nsswitch.conf, execute Linux VDA setup script, and start service
 ``linuxvda.xdping``
 --------------------
 
-Download XDPing package from `linuxvda.citrix.uri`, validate the hashsum, and install.
+Download XDPing package from `linuxvda.citrix.uri`, validate the hashsum, and install.  (Disabled for Ubuntu 18.04 - Work in Progress)
 
 ``linuxvda.remove``
 --------------------------
