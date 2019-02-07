@@ -68,4 +68,3 @@ linuxvda_xdping_package_install:
     - unless: {{ grains.os == 'Ubuntu' and grains.osmajorrelease|int >= 18 }}
 
    {% endif %}
-{% endif %}
