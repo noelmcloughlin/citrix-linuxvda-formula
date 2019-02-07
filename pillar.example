@@ -11,18 +11,27 @@ linuxvda:
     #Formula default is currently version 7.16
     #Latest version is 1811
     ##EL7
-    #src_pkg: LinuxVDA-1811.el7_x.rpm 
-    #src_hash: sha256=80a995c2c4a042fd57092b8a5bc69f3d50c0ec8a468d1edc817789eff480dfac
+  {%- if grains.os_family == 'RedHat' %}
+    src_pkg: LinuxVDA-1811.el7_x.rpm
+    src_hash: sha256=80a995c2c4a042fd57092b8a5bc69f3d50c0ec8a468d1edc817789eff480dfac
+  {%- endif %}
+  {%- if grains.os_family == 'Suse' %}
     ##SLE
-    #src_pkg: LinuxVDA-1811.sle12_x.rpm 
-    #src_hash: sha256=4120d9f4a8589a49fa34ac75c65c2e8ea639f464aea54bf553ea22c9eb27d0ef
+    src_pkg: LinuxVDA-1811.sle12_x.rpm
+    src_hash: sha256=4120d9f4a8589a49fa34ac75c65c2e8ea639f464aea54bf553ea22c9eb27d0ef
+  {%- endif %}
+  {%- if grains.os == 'Ubuntu' %}
     #UBUNTU
-    #src_pkg: LinuxVDA-1811.ubuntu16.04.deb
-    #src_hash: sha256=cdc999d964fab391cd4680607d464d2619b7cd620995392edb3852c5db5ce715
+    src_pkg: LinuxVDA-1811.ubuntu16.04.deb
+    src_hash: sha256=cdc999d964fab391cd4680607d464d2619b7cd620995392edb3852c5db5ce715
+  {%- endif %}
     variables:
       #Site specific configuration
       CTX_XDL_DDC_LIST: citrixdc1.example.com
+
+  {%- if grains.os == 'Ubuntu' and grains.osmajorrelease < 18 %}
+      ### Ubuntu 18.04 is work in progress
   xdping:
     archive: linux-xdping.tar
     hash: sha256=38cf8ff42cd0d610ba7323689046cd1492db912c9f722932e99c13869301186a
-
+  {%- endif %}

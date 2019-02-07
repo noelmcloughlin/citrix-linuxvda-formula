@@ -1,11 +1,14 @@
 {% from "linuxvda/map.jinja" import linuxvda with context %}
 
-{% if linuxvda.xdping.archive %}
+
+  {% if not (grains.os == 'Ubuntu' and grains.osmajorrelease|int >= 18) %}
+     ### xdping is not working on Ubuntu 18.04 yet.
+
+     {% if linuxvda.xdping.archive %}
 
 linuxvda_xdping_tmpdir:
   file.directory:
     - name: '{{ linuxvda.dl.tmpdir }}'
-    - clean: True
     - makedirs: True
     - require_in:
       - cmd: linuxvda_xdping_download_archive
@@ -14,13 +17,16 @@ linuxvda_xdping_tmpdir:
 linuxvda_xdping_download_archive:
   cmd.run:
     - name: curl -o {{linuxvda.dl.tmpdir}}/{{linuxvda.xdping.archive}} {{linuxvda.citrix.uri ~ linuxvda.xdping.archive}}
-    {% if grains['saltversioninfo'] >= [2017, 7, 0] %}
+    - unless: test -f {{linuxvda.dl.tmpdir}}/{{linuxvda.xdping.archive}}
+         {% if grains['saltversioninfo'] >= [2017, 7, 0] %}
     - retry:
       attempts: {{ linuxvda.dl.retries }}
       interval: {{ linuxvda.dl.interval }}
-    {% endif %}
+      until: True
+      splay: 10
+         {% endif %}
 
-    {%- if linuxvda.xdping.hash %}
+         {%- if linuxvda.xdping.hash %}
 linuxvda_xdping-check-archive-hash:
    # Check local archive using hashstring for older Salt / MacOS.
   module.run:
@@ -28,24 +34,24 @@ linuxvda_xdping-check-archive-hash:
     - path: {{ linuxvda.dl.tmpdir }}/{{ linuxvda.xdping.archive }}
     - file_hash: {{ linuxvda.xdping.hash }}
     - onlyif: test -f {{ linuxvda.dl.tmpdir }}/{{ linuxvda.xdping.archive }}
-    - onchanges:
+    - require:
       - cmd: linuxvda_xdping_download_archive
     - require_in:
       - archive: linuxvda_xdping_archive_extract
-    {%- endif %}
+         {%- endif %}
 
 linuxvda_xdping_archive_extract:
   archive.extracted:
     - source: 'file://{{ linuxvda.dl.tmpdir }}/{{ linuxvda.xdping.archive }}'
     - name: '{{ linuxvda.dl.tmpdir }}'
     - archive_format: tar
-    - onchanges:
+    - require:
       - cmd: linuxvda_xdping_download_archive
     - require_in:
       - pkg: linuxvda_xdping_package_install
-       {% if grains['saltversioninfo'] < [2016, 11, 0] %}
+            {% if grains['saltversioninfo'] < [2016, 11, 0] %}
     - if_missing: '{{ linuxvda.xdping.cmd }}'
-       {% endif %}
+            {% endif %}
 
 linuxvda_xdping_package_install:
   cmd.run:
@@ -59,11 +65,7 @@ linuxvda_xdping_package_install:
     - require:
       - archive: linuxvda_xdping_archive_extract
     - onlyif: test -f {{ linuxvda.dl.tmpdir }}/{{ linuxvda.xdping.package }}
+    - unless: {{ grains.os == 'Ubuntu' and grains.osmajorrelease|int >= 18 }}
 
-linuxvda_xdping_remove_tmpdir:
-  file.absent:
-    - name: '{{ linuxvda.dl.tmpdir }}'
-    - require:
-      - pkg: linuxvda_xdping_package_install
-
+   {% endif %}
 {% endif %}
