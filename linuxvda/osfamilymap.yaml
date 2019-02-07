@@ -1,0 +1,42 @@
+###  linuxvda/osfamilymap.yaml
+# -*- coding: utf-8 -*-
+# vim: ft=jinja
+
+Debian:
+  src_pkg: LinuxVDA-1811.ubuntu16.04.deb
+  src_hash: sha256=cdc999d964fab391cd4680607d464d2619b7cd620995392edb3852c5db5ce715
+  pkgs:
+    - libxm4
+    - libsasl2-2
+    - libsasl2-modules-gssapi-mit
+    - libldap-2.4-2
+    - cups
+    - libpostgresql-jdbc-java
+  xdping:
+    package: linux-xdping/Ubuntu/xdping_7.13.1-0_amd64.deb
+
+
+RedHat:
+  src_pkg: LinuxVDA-1811.el7_x.rpm
+  src_hash: sha256=80a995c2c4a042fd57092b8a5bc69f3d50c0ec8a468d1edc817789eff480dfac
+  pkgs:
+    -  pulseaudio
+  xdping:
+    package: linux-xdping/RHEL/xdping-7.13.1-0.x86_64.rpm
+
+
+Suse:
+  src_pkg: LinuxVDA-1811.sle12_x.rpm
+  src_hash: sha256=4120d9f4a8589a49fa34ac75c65c2e8ea639f464aea54bf553ea22c9eb27d0ef
+  pkgs:
+    - libxm4
+    - cups
+    - foomatic-filters
+    - imageMagick
+    - libsasl2-2-gssapi
+    - libldap-2_4-2
+    - gperftools
+    - libecpg6
+    - postgresql-jdbc
+  xdping:
+    package: linux-xdping/SuSE/xdping-7.13.1-0.x86_64.rpm

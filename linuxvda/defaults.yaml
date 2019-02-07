@@ -3,9 +3,9 @@
 
 linuxvda:
   #Ubuntu values..
-  packagename: xendesktopvda
   src_pkg: XenDesktopVDA-7.16.0.412-1.el7_x.x86_64.rpm
   src_hash: sha256=8b75157869fda9db2a8bebeffee75619fcda4d9dcadac62f013d4f89a7a6ffe6
+  packagename: xendesktopvda
   fqdn_resolver_alias:
   enable_ntp_timesync: timedatectl set-ntp True
   cleanup_before_setup: False
@@ -61,4 +61,3 @@ linuxvda:
      {% raw %}
       - ['hostsMdns', '^(?!#).*(?<!#|\w)(host.*:.*files\s)(mdns4?_minimal.*\]\s*)(dns.*$)', '\1 \3',]
      {% endraw %}
-

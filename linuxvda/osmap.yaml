@@ -1,0 +1,9 @@
+###  linuxvda/osmap.yaml
+# -*- coding: utf-8 -*-
+# vim: ft=jinja
+
+Ubuntu:
+  pkgs:
+    - xserver-xorg-core
+    - xserver-xorg
+    - ubuntu-desktop

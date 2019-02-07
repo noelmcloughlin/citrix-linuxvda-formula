@@ -1,40 +1,25 @@
-# -* coding: utf-8 -*-
-# vim: ft=jinja
-
-{% set osmap = salt['grains.filter_by']({
-  'default':{ 'packagename': 'XenDesktopVDA', },
-
-  'RedHat':{ 'packagename': 'XenDesktopVDA',
-             'pkgs': ['pulseaudio',] },
-
-  'Debian': {
-    'src_pkg': 'xendesktopvda_7.16.0.412-1.ubuntu16.04_amd64.deb',
-    'src_hash': 'fc48ad39be54cae0034e9302908aa146',
-    'pkgs': ['libxm4', 'libsasl2-2', 'libsasl2-modules-gssapi-mit', 'libldap-2.4-2', 'cups', 'libpostgresql-jdbc-java',], },
-
- 'Suse':{
-    'src_pkg': 'XenDesktopVDA-7.16.0.412-1.sle12_x.x86_64.rpm',
-    'src_hash': 'sha256=57bd03ee4a01cce9a01571eba668b0dcc34787a9f7a4b8a637696172860206f7',
-    'pkgs': ['libxm4', 'cups', 'foomatic-filters', 'imageMagick', 'libsasl2-2-gssapi', 'libldap-2_4-2', 'gperftools', 'libecpg6', 'postgresql-jdbc',], },
-
- }, grain='os_family', merge=salt['grains.filter_by']({
-    'Fedora': {
-      'packagename': 'XenDesktopVDA', },
-
-    'Ubuntu': {
-      'pkgs': ['xserver-xorg-core',' xserver-xorg','ubuntu-desktop','libxm4','libsasl2-2','libsasl2-modules-gssapi-mit','libldap-2.4-2','cups','libpostgresql-jdbc-java',], },
-
-   }, grain='os'))%}
-
-{% set xdping_osmap = salt['grains.filter_by']({
-  'default': { 'package': 'linux-xdping/RHEL/xdping-7.13.1-0.x86_64.rpm', },
-  'Debian': { 'package': 'linux-xdping/Ubuntu/xdping_7.13.1-0_amd64.deb', },
-  'Suse':{ 'package': 'linux-xdping/SuSE/xdping-7.13.1-0.x86_64.rpm', },
- }, grain='os_family')%}
-
-{# start with defaults, merge osmaps and then pillars #}
 {% import_yaml "linuxvda/defaults.yaml" as defaults %}
-{% do defaults.linuxvda.update( osmap ) %}
-{% do defaults.linuxvda.xdping.update( xdping_osmap ) %}
-{% set linuxvda = salt['pillar.get']( 'linuxvda', default=defaults.linuxvda, merge=True) %}
+{% import_yaml "linuxvda/osmap.yaml" as osmap %}
+{% import_yaml "linuxvda/osfamilymap.yaml" as osfamilymap %}
+{% import_yaml "linuxvda/oscodemap.yaml" as oscodemap %}
 
+{% set linuxvda = salt['grains.filter_by'](
+    defaults,
+    merge=salt['grains.filter_by'](
+        osfamilymap,
+        grain='os_family',
+        merge=salt['grains.filter_by'](
+            osmap,
+            grain='os',
+                merge=salt['grains.filter_by'](
+                    oscodemap,
+                    grain='oscodename',
+                    merge=salt['pillar.get']('linuxvda', {}),
+                base='linuxvda',
+                ),
+            base='linuxvda',
+            ),
+        base='linuxvda',
+        ),
+    base='linuxvda',
+)%}

@@ -1,0 +1,9 @@
+###  linuxvda/codenamemap.yaml
+# -*- coding: utf-8 -*-
+# vim: ft=jinja
+
+bionic:
+  src_pkg: LinuxVDA-1811.ubuntu16.04.deb
+  src_hash: 'sha256=cdc999d964fab391cd4680607d464d2619b7cd620995392edb3852c5db5ce715'
+  xdping:
+    package: ''
