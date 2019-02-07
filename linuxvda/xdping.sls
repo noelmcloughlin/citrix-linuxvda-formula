@@ -3,7 +3,6 @@
 
   {% if not (grains.os == 'Ubuntu' and grains.osmajorrelease|int >= 18) %}
      ### xdping is not working on Ubuntu 18.04 yet.
-
      {% if linuxvda.xdping.archive %}
 
 linuxvda_xdping_tmpdir:
@@ -67,4 +66,5 @@ linuxvda_xdping_package_install:
     - onlyif: test -f {{ linuxvda.dl.tmpdir }}/{{ linuxvda.xdping.package }}
     - unless: {{ grains.os == 'Ubuntu' and grains.osmajorrelease|int >= 18 }}
 
-   {% endif %}
+     {% endif %}
+  {% endif %}
