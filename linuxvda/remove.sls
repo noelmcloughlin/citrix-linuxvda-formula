@@ -21,6 +21,7 @@ linuxvda_remove:
       - xendesktopvda
       - XenDesktopVDA
       - xdping
+      - LinuxVDA-1811
     - require:
       - cmd: linuxvda_remove
   file.absent:
